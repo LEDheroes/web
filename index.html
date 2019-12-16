@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>交互式录波器</title>
+		<style type="text/css">
+
+			body,ul,li{
+				margin: 0;
+				padding: 0;
+				
+			}
+			body{
+				background-image: url(img/m.jpg);
+				background-repeat: no-repeat;
+				/*background-position: 0 50px;*/
+				background-position-x: 0;
+				background-position-y: 50px;
+				
+			}
+			.t-top{
+				text-align: center;
+				width: 100%;
+				height: 50px;
+				background-color: #6495ED;
+				position: fixed;
+			}
+			.container{
+				margin: 0 auto;
+				width: 1100px;
+				height: 1000px;
+				position: absolute;
+				top: 50px;
+				left: 0;
+				right: 0;
+				margin: auto;   /*内部区块水平居中*/
+				z-index: -1;
+			}
+			.container .header{
+				margin: 0 auto;
+				height: 60px;
+				background-color: aquamarine;
+			}
+			.container .main{
+				/*margin-top: 10px;*/
+				position: relative; 	
+			}
+			.container .main .left{
+				float: left;
+				width: 20%;
+				background-color: yellow;
+				height: 470px;
+				/*position: absolute;
+				top: 0;
+				left: 0;
+				height: 520px;
+				width: 170px;
+				background-color: chartreuse;*/
+			}
+			.container .main .right{
+				text-align: center;
+				float: left;
+				background-color: pink;
+				width: 20%;
+				height: 470px;
+			/*	position: absolute;
+				top: 0;
+				right: 0;
+				height: 520px;
+				width: 170px;
+				background-color: chartreuse;*/
+			}
+			.container .main .content{
+				width: 60%;
+				float: left;
+				height: 470px;
+				/*height: 500px;
+				margin-left: 175px;
+				margin-right: 175px;
+				background-color: gold;*/
+			}
+			.container .footer{
+
+				margin-top: 10px;
+				height: 100px;
+				background-color: darkorchid;
+			}
+			.title{
+
+			}
+			.title ul{
+				list-style: none;
+			}
+			.title li{
+
+				margin-left: 120px;
+				margin-top: 10px;
+				float: left;
+			}
+			.title a{
+				color: black;
+				text-decoration: none;
+				font-size: 30px;
+
+			}
+			.left ul{
+				/*margin-top: 50px;*/
+				list-style: none;
+			}
+			.left li{
+				text-align: center;
+				height: 70px;
+				line-height: 70px;
+			}
+			.left a{
+				text-decoration: none;
+				color: black;
+				font-size:20px;
+			}
+			
+			.cle{
+				clear: both;
+			}
+			.img{
+				margin-top: 50px;
+				width:220px; 
+				height:200px;
+				border-radius: 100px;
+			}
+			.right button{
+				border: none;
+				margin-top: 30px;
+				border-radius: 30px;
+				padding: 8px 30px;
+				background-color: yellow;
+
+			}
+
+
+			/*弹框样式*/
+
+
+			        #d1{
+            border-radius: 5px;
+            width: 400px;
+            height: 230px;
+            z-index: 2;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            margin-left: -200px;
+            margin-top: -150px;
+            overflow: hidden;
+            display: none;
+            background-color: white;
+        }
+        #d2{
+            position: fixed;
+            left: 0;
+            top:0;
+            width: 100%;
+            height: 100%;
+            background-color: grey;
+            z-index: 1;
+            opacity: 0.8;
+            display: none;
+        }
+        #number{
+            display: block;
+            width: 90%;
+            height: 30px;
+            margin: 10px auto 30px auto;
+            border: solid 1px #248CD6;
+            border-radius: 5px;
+            outline: none;
+            text-indent: 10px;
+            
+        }
+        #number:focus{
+            border: solid 1px #248CD6;
+            border-radius: 5px;
+            box-shadow: 0 0 8px #248CD6;
+        }
+        .tc .submit{
+            display: flex;
+            width: 90%;
+            height: 40px;
+            margin: 20px auto;
+        }
+        .tc .cancel,.confirm{
+            flex: 1;
+            margin: 3px;
+            border: none;
+            transition: all 0.2s;
+        }
+        .tc .cancel:hover,.confirm:hover{
+            background-color: #248CD6;
+            color: white;
+        }
+        .tc .top a{
+        	font-size: 20px;
+            float: right;
+            margin-right: 2px;
+            text-decoration: none;
+            color: #3A3C3D;
+            opacity: 0.8;
+        }
+        .tc .top a:hover{
+            opacity: 1;
+        }
+        .xstw{
+            line-height: 35px;
+            margin-top: 25px;
+        }
+        .xstw input{
+            
+            width: 125px;
+            height: 35px;
+            /*margin: 0 50px;*/
+            border-radius: 25px;
+            border:1px solid #DBDBDB;
+            outline:none;
+            background-color: #4d99fd;
+        }
+        .tc_tit{
+            padding: 0 16px;
+            color: #3A3C3D;
+            /*opacity: 0.7;*/
+            text-align: left;
+            height: 40px;
+            line-height: 40px;
+            /* width: 100%; */
+        }
+        .tc_tit a{
+            height: 40px;
+            line-height: 40px;
+        }
+        .question{
+            
+            text-align: left;
+            text-indent: 20px;
+            padding-bottom: 20px;
+        }
+
+
+
+
+
+		</style>
+
+		<script type="text/javascript">
+
+		// 弹框
+	var setInter = 0;
+	main();
+	function main(){ 
+	    setInter = setInterval(function() {
+	        var vid = document.getElementById("videos");
+	        var currentTime=vid.currentTime.toFixed(1);
+	        console.log("时间"+currentTime);
+	        if(currentTime >2 ){
+	            chickMe();
+	        }
+	    }, 1500);
+	}
+	
+	function chickMe() {
+	    videos.pause();
+	    let d2=document.getElementById("d2");
+	    d2.style.display="block";
+	    let d1=document.getElementById("d1");
+	    d1.style.display="block";
+	}
+	function cancel() {
+	    videos.pause();
+	    let d2=document.getElementById("d2");
+	    d2.style.display="none";
+	    let d1=document.getElementById("d1");
+	    d1.style.display="none";
+	    clearInterval(setInter);
+	    console.log("您点击了取消");
+	}
+	function confirm() {
+	    console.log("您点击了确定");
+	    let d2=document.getElementById("d2");
+	    d2.style.display="none";
+	    let d1=document.getElementById("d1");
+	    d1.style.display="none";
+	    videos.play();
+	    clearInterval(setInter);
+	}
+	function closes(){
+	    videos.pause();
+	    let d2=document.getElementById("d2");
+	    d2.style.display="none";
+	    let d1=document.getElementById("d1");
+	    d1.style.display="none";
+	    console.log("点击关闭");
+	}
+	function stu_ques(){
+	    videos.pause();
+	    let d2=document.getElementById("d2");
+	    d2.style.display="block";
+	    let d1=document.getElementById("d1");
+	    d1.style.display="block";
+	}
+
+
+		</script>
+			
+	</head>
+	<body>
+		<div class="t-top">
+        <p style="font-size: 30px;margin: 0">交互式录播器</p>
+		</div>
+		<div class="container"s>
+			<div class="header">
+			<div class="title">
+			<ul>
+				<li><a onclick="chickMe()">语音提问</a></li>
+				<li><a onclick="chickMe()">文本提问</a></li>
+				<li><a href="https://www.iqiyi.com/">视频提问</a></li>
+				<li><a onclick="chickMe()">文字回复</a></li>
+			</ul>
+
+			<!--弹窗-->
+		    <div class="tc">
+                    <div id="d2"></div>
+                    <!-- <button onclick="chickMe()">点击</button> -->
+                    <div id="d1">
+                    <div class="top">
+                        <!-- <span>444</span> -->
+                        <div class="tc_tit">
+                            <!--<span class="xstwtc"></span>-->
+                            <a href="javascript:void(0)" onclick="closes()">&#935;</a>
+                        </div>
+                        <div class="question">先有鸡还是先有蛋？</div>
+                    </div>
+                    <input type="text" class="number" placeholder="请输入" id="number">
+                    <div class="submit">
+                        <!-- <input type="checkbox" value="111"> -->
+                        <button class="cancel"onclick="cancel()">取消</button>
+                        <button class="confirm" onclick="confirm()">确定</button>
+                    </div>
+                </div>
+            </div>
+
+
+
+
+		</div>
+			</div>
+			<div class="main">
+				<div class="left">
+				<ul>
+				<li><a href="http://www.w3school.com.cn/">W3School</a></li>
+				<li><a href="http://www.baidu.com.cn/">百度</a></li>
+				<li><a href="http://www.cnki.com.cn/">知网</a></li>
+				<li><a href="http://lib.ylu.edu.cn/">玉师图书馆</a></li>
+				<li><a href="http://paper.people.com.cn/">人民日报</a></li>
+				</ul>
+				</div>
+			    <div class="content">
+				    <video  id="videos" controls="controls" width="100%" height="100%">
+				    <source src="c.mp4">
+				    </video>
+			    </div>
+			    <div class="right">
+			    <div>
+			    <img src="a.jpg" class="img">
+			    <button>注册</button><br>
+			    <button>登录</button>
+			    </div>
+			</div>
+			<div class="cle"></div>
+		</div>
+	</body>
+</html>
